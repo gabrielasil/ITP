@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <string.h>
+
+int diadasemana(char entrada[11], char *saida[], int *bissexto) {
+    if(entrada[2] != '/'){ //verificar se a data está no formato certo
+        return 0;
+    } 
+    
+    int d = ((entrada[0]-48) * 10) + (entrada[1]-48); //converter a string de data pra dia, mes e ano
+    int m = ((entrada[3]-48) * 10) + (entrada[4]-48);
+    int y = ((entrada[6]-48) * 1000) + ((entrada[7]-48)*100) + ((entrada[8]-48)*10) + (entrada[9]-48);
+    
+    
+    if(y%400 == 0){ //verificar se é bissexto
+		*bissexto = 1;		
+	}
+	else if((y % 4 == 0)&&(y % 100 != 0)){
+		*bissexto = 1;	
+	}
+    
+    if(*bissexto == 0 && m == 2 && d > 28){
+        return -1;
+    }
+    
+    if(m == 4 || m == 6 || m == 9 || m == 11){ //verificar se a data é valida
+        if(d > 30){
+            return -1;
+        }
+    }else if(m == 2){
+        if(d>29){
+            return -1;
+        }
+    }else{
+        if(d > 31){
+            return -1;
+        }
+    }
+    
+    //calcular o dia da semana
+    int diadasemana = (23 * m / 9 + d + 4 + (m < 3 ? y - 1 : y - 2) + y / 4 - y / 100 + y / 400) % 7;
+    
+    //apontar para o dia da semana certo de acordo com o calculo acima
+    if(diadasemana == 0){
+        *saida = "Domingo";
+    }else if(diadasemana == 1){
+        *saida = "Segunda";
+    }else if(diadasemana == 2){
+        *saida = "Terça";
+    }else if(diadasemana == 3){
+        *saida = "Quarta";
+    }else if(diadasemana == 4){
+        *saida = "Quinta";
+    }else if(diadasemana == 5){
+        *saida = "Sexta";
+    }else if(diadasemana == 6){
+        *saida = "Sábado";
+    }
+    return 1;
+}
+
+int main(){
+    int status=0, bissexto=0;
+    char entrada[11]={0}, *saida=NULL;
+    fgets(entrada,11,stdin);
+        
+    status = diadasemana(entrada, &saida, &bissexto);
+        
+    if (status>0)
+        printf("%s.%s\n", saida, 
+            bissexto? " Ano bissexto." : "");
+    else {
+        if (status==-1)
+            printf("Data inexistente.\n");
+        else
+            printf("Entrada invalida.\n");
+        return 1;
+    }
+
+    return 0;
+}

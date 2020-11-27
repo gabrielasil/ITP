@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(){
+    char p[30];
+    int i, tamP, maiusculas = 0, minusculas = 0;
+
+    fgets(p, 30, stdin);
+    tamP = strlen(p) - 1;
+
+    for(i = 0; i <=tamP; i++){
+      if(p[i] >= 'A' && p[i] <= 'Z'){
+                maiusculas += 1;
+            }else if(p[i]>= 'a' && p[i] <= 'z'){
+                minusculas +=1;
+            }
+    }
+
+    printf("%i", maiusculas);
+    printf(" %i", minusculas);
+  return 0;
+}

@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int main(){
+    int elementos, i;
+    
+    scanf("%i", &elementos);
+    
+    if (elementos>10){
+        printf("Muitos elementos!");
+    }else{
+        float v1[elementos];
+        float v2[elementos];
+        for (i = 0; i < elementos; i++){
+            scanf("%f", &v1[i]);
+        }
+        for (i = 0; i<elementos; i++){
+            scanf("%f", &v2[i]);
+        }
+        for (i = 0; i<elementos; i++){
+            v1[i] = v1[i]+v2[i];
+            printf("%.2f ", v1[i]);
+        }
+
+    }
+    return 0; 
+}

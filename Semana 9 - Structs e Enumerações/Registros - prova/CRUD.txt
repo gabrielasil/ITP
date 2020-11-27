@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct{
+    char nome[21];
+    int idade;
+    char sexo;
+}Cadastro;
+
+
+void inserir(Cadastro pessoas[20],Cadastro pessoa, int *tamanho){
+    pessoas[*tamanho] = pessoa;
+    *tamanho = *tamanho + 1;
+}
+
+Cadastro criar(){
+    int tamanho;
+    Cadastro aux;
+    scanf("%[^,],%i,%c", aux.nome, &aux.idade, &aux.sexo);
+    strcpy(aux.nome,(aux.nome + 1));
+    return aux;
+}
+
+void imprimir(Cadastro pessoas[], int tamanho){
+    int i;
+    for(i = 0; i < tamanho; i++){
+        printf("%s,%i,%c\n", pessoas[i].nome,pessoas[i].idade,pessoas[i].sexo);
+    }
+}
+
+void deletar(Cadastro pessoas[20],int *tamanho){
+    char nome[21];
+    int idade;
+    char sexo;
+    scanf("%[^,],%i,%c", nome, &idade, &sexo);
+
+    for(int i = 0;i<*tamanho;i++){
+        if(strcmp((nome + 1),pessoas[i].nome) == 0 && pessoas[i].idade == idade && pessoas[i].sexo == sexo){
+            *tamanho -= 1;
+            for(int j = i;j<*tamanho;j++){
+                pessoas[j] = pessoas[j + 1];
+            }
+            break;
+        }
+    }
+}
+
+int main(){
+    Cadastro pessoa;
+    Cadastro lista[20];
+    char crud[10];
+    int tamanho = 0;
+    
+    while(strcmp(crud, "imprimir") != 0){
+        scanf("%s", crud);
+        if(strcmp(crud, "inserir") == 0){
+            pessoa = criar();
+            inserir(lista,pessoa,&tamanho);
+        }else if(strcmp(crud, "deletar") == 0){
+            deletar(lista,&tamanho);
+        }
+    }
+    imprimir(lista, tamanho);
+    return 0;
+}

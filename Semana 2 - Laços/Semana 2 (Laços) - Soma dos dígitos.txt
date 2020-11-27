@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int main(){
+    int a, soma;
+    
+    scanf("%d", &a);
+    soma = 0;
+    
+    while (a>0){
+        soma += a%10; //Incrementando o valor de cada digito na soma, sendo o digito o resto da divisão por 10
+        
+        a /= 10; //Dividindo o valor para passar para o próximo digito
+    }
+    
+    printf("%d", soma);
+    
+    return 0;
+}

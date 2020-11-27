@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+void ordenarCrescente(int vetor[5]){
+    int i, j, aux;
+    for(i = 0; i < 5 - 1; i++){
+        for(j = i+1; j < 5; j++){
+            if(vetor[i] > vetor[j]){
+                aux = vetor[i];
+                vetor[i] = vetor[j];
+                vetor[j] = aux;
+            }
+        }
+    }
+}
+
+void ordenarDecrescente(int vetor[5]){
+    int i, j, aux;
+    for (int i = 0; i < 5 - 1; i++){
+        for (int j = i; j < 5; j++){
+            if (vetor[i] < vetor[j]){
+                int aux = vetor[i];
+                vetor[i] = vetor[j];
+                vetor[j] = aux;
+            }
+        }
+    }
+}
+
+int main(){
+    int vetor[5], i, crescente[5], decrescente[5];
+    
+    for(i = 0; i<5; i++){
+        scanf("%i", &vetor[i]);
+        crescente[i] = vetor[i];
+        decrescente[i] = vetor[i];
+    }
+    
+    
+    
+    ordenarCrescente(crescente);
+    for(i = 0; i<5; i++){
+        printf("%i ", crescente[i]);
+    }
+    printf("\n");
+    ordenarDecrescente(decrescente);
+    for(i = 0; i<5; i++){
+        printf("%i ", decrescente[i]);
+    }
+    
+    printf("\n");
+    for(i = 0; i<5; i++){
+        printf("%i ", vetor[i]);
+    }
+}

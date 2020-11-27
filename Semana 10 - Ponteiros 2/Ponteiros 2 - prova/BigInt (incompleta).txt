@@ -1,0 +1,143 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct{
+    char str_num[50];
+    int positivo;
+} big_int;
+
+int mul(big_int *a, big_int *b, big_int *result){
+    int tam1 = strlen(a->str_num);
+    int tam2 = strlen(b->str_num);
+    if(tam1 >= 26 && tam2 >= 26){
+        return 0;
+    }else return 1;
+}
+
+char *reverseString(char *string){
+    int tamanho = strlen(string);
+    int c, i, j;
+
+    for (i = 0, j = tamanho - 1; i < j; i++, j--){
+        c = string[i];
+        string[i] = string[j];
+        string[j] = c;
+    }
+    return string;
+}
+
+int add(big_int *a, big_int *b, big_int *result){
+    int tam1 = strlen(a->str_num);
+    int tam2 = strlen(b->str_num);
+    int carry = 0;
+    int somaA = 0, somaB = 0, resultado = 0;
+    int i, j, k, l;
+    if((a->positivo == 1 && b->positivo == 1)||(a->positivo == 0 && b->positivo == 0)){
+        if(tam2 > tam1){
+            for(i = 0, j = tam1-1, k = tam2-1; i < tam1; i++, j--, k--){
+                somaA = (a->str_num[j]-'0'); //convertendo de char para int 
+                somaB = (b->str_num[k]-'0'); 
+                    if((somaA + somaB + carry) >= 10){ //caso o resultado da soma seja maior que 10
+                        resultado = ((somaA + somaB + carry) % 10); //guardar a casa das unidades no resultado
+                        carry = (somaA + somaB + carry) / 10; //guardar a casa das dezenas para a proxima soma
+                        result->str_num[i] = resultado + 48; //guardando o resultado + o carry na string
+                    }else{
+                        resultado = somaA + somaB;
+                        result->str_num[i] = resultado + carry + 48;
+                        carry = 0;
+                    }
+            }
+            for(l = (tam2-tam1)-1; l>=0; l--, i++){
+                result->str_num[i] = b->str_num[l];
+            }
+        }
+    
+        if(tam1 > tam2){
+            for(i = 0, j = tam1-1, k = tam2-1; i < tam1; i++, j--, k--){
+                somaA = (a->str_num[j]-'0'); //convertendo de char para int 
+                somaB = (b->str_num[k]-'0'); 
+                if((somaA + somaB + carry) >= 10){ //caso o resultado da soma total seja maior que 10
+                    resultado = ((somaA + somaB + carry) % 10); //guardar a casa das unidades no resultado
+                    carry = (somaA + somaB + carry) / 10; //guardar a casa das dezenas para a proxima soma
+                    result->str_num[i] = resultado + 48; //convertendo pra string
+                }else{
+                    resultado = somaA + somaB; //o resultado será apenas a soma das duas casas 
+                    result->str_num[i] = resultado + carry + 48; //convertendo pra string
+                    carry = 0; //resetando o carry
+                }
+            }
+            for(l = (tam1-tam2)-1; l>=0; l--, i++){
+                result->str_num[i] = a->str_num[l];
+            }
+        }
+        if(strlen(result->str_num) >50){
+            return 0;
+        }else return 1;
+    }
+}
+
+int convert(char *str1, big_int *num){
+    int tam = strlen(str1);
+    if(str1[0] == '-'){
+        num->positivo = 0; //guardando a informação de que o numero é negativo
+        for(int i = 1; i < tam; i++){ //pra tirar o "-" do inicio do numero caso ele seja negativo
+            str1[i-1] = str1[i];
+        }
+        tam -=1;
+        str1[tam] = '\0';
+    }else{ //caso o numero seja positivo
+        num->positivo = 1;
+    }
+    
+    if(tam <= 50){
+        strcpy(num->str_num, str1);
+        return 1;
+    }else return 0;
+}
+
+int main(){
+    char str1[100], str2[100], str3[100], comando[4];
+    big_int a;
+    big_int b;
+    big_int result;
+    int verificarA = 0, verificarB = 0, verificarResult = 0;
+    
+    scanf("%s", str1);
+    verificarA = convert(str1, &a);
+    if(verificarA == 0){
+        printf("impossível converter %s", str1);
+        return 0;
+    }
+    
+    scanf("%s", str2);
+    verificarB = convert(str2, &b);
+    
+    if(verificarB == 0){
+        printf("impossível converter %s", str2);
+        return 0;
+    }
+    scanf("%s", comando);
+    if(strcmp(comando, "add") == 0){
+        verificarResult = add(&a, &b, &result);
+        if(verificarResult == 1){
+            printf("%s", reverseString(result.str_num));
+        }else printf("impossível calcular %s + %s", a.str_num, a.str_num);
+    }else if(strcmp(comando, "mul") == 0){
+        verificarResult = mul(&a, &b, &result);
+        if(verificarResult == 1){
+            printf("%s", reverseString(result.str_num));
+        }else{
+            if(a.positivo == 0 && b.positivo == 0){
+                printf("impossível calcular -%s * -%s", a.str_num, b.str_num);
+            }else if(a.positivo == 1 && b.positivo == 0){
+                printf("impossível calcular %s * -%s", a.str_num, b.str_num);
+            }else if(a.positivo == 0 && b.positivo == 1){
+                printf("impossível calcular -%s * %s", a.str_num, b.str_num);
+            }else if(a.positivo == 1 && b.positivo == 1){
+                printf("impossível calcular %s * %s", a.str_num, b.str_num);
+            }
+        } 
+    }
+    return 0;
+}

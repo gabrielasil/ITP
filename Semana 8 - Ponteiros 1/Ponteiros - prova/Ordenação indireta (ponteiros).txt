@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+void imprime_indireto (int **A_indireto, int n) {
+    for (int i=0; i<n; i++)
+        printf ("%d ", **(A_indireto+i));
+} 
+
+void ordenarVetor(int n, int *A_indireto[n]){
+    int i = 0, j = 0, *aux = NULL;
+    for(i = 0; i < n; i++){
+        for(j = i+1; j < n; j++){
+            if(*A_indireto[i] > *A_indireto[j]){
+                aux = A_indireto[i];
+                A_indireto[i] = A_indireto[j];
+                A_indireto[j] = aux;
+            }
+        }
+    }
+}
+
+int main(){
+    int n, i;
+    
+    scanf("%i", &n);
+    int A[n];
+    int *A_indireto[n];
+    
+    for(i = 0; i < n; i++){
+        scanf("%i", &A[i]);
+        A_indireto[i] = &A[i];
+    }
+    
+    
+    ordenarVetor(n, A_indireto);
+    imprime_indireto(A_indireto, n);
+    printf("\n");
+    for(i = 0; i < n; i++){
+        printf("%i ", A[i]);
+    }
+
+}

@@ -1,0 +1,57 @@
+#include<stdio.h>
+
+    int contadorAuxiliar = 0;
+int procurarElementos(int vetor[],int j,int k,int n,int tamanho,int soma){
+    if(j == tamanho || (vetor[j] + soma>k)){
+        return n;
+    }else{
+        soma += vetor[j];
+        n++; // n é o numero maximo de elementos encontrados que resulta no maior valor possivel para k
+        procurarElementos(vetor,j+1,k,n,tamanho,soma);
+    }
+}
+
+void organizarVetor(int vetor[],int i, int k, int tamanho, int numElementosAuxiliar,int vetorp[50]){
+    int numElementos;
+    int contadorexterno = 0;
+
+    if(i == tamanho){
+        return;
+    }else{
+        numElementos = procurarElementos(vetor,i,k,0,tamanho,0);
+
+        if(numElementos > numElementosAuxiliar){
+            numElementosAuxiliar = numElementos; //o maior numero de elementos até o momento será guardado aqui 
+            contadorAuxiliar = numElementos; //contador auxiliar marca o final dos elementos
+            contadorexterno = i; //inicio dos elementos a serem printados
+            for(int contadorinterno = 0;contadorinterno < numElementosAuxiliar; contadorexterno++,  contadorinterno++){
+                vetorp[contadorinterno] = vetor[contadorexterno]; //criar um novo vetor com os elementos
+            }
+        }
+        return organizarVetor(vetor,i+1,k,tamanho,numElementosAuxiliar,vetorp);
+    }
+}
+int main(){
+    int k = 5;
+    int tamanho;
+    int vetorp[50];
+    
+    scanf("%i",&tamanho);
+    
+    int vetor[tamanho];
+    
+
+    scanf("%i",&k);
+
+    for(int i = 0; i<tamanho;i++){
+        scanf("%i",&vetor[i]);
+    }
+
+    organizarVetor(vetor,0,k,tamanho,0,vetorp);
+    if (contadorAuxiliar == 0){
+        printf("Partição Vazia");
+    }
+    for(int i = 0; i < contadorAuxiliar;i++){
+        printf("%i ",vetorp[i]);
+    }
+}

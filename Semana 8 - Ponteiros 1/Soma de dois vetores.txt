@@ -1,0 +1,45 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void imprimesoma(float *,float *,float *,int);
+
+int main(void){
+    int n;
+    scanf("%i",&n);
+
+    float vetor1[n];
+    float vetor2[n];
+    float vetor3[n];
+
+    float *v1 = &vetor1;
+    float *v2 = &vetor2;
+    float *v3 = &vetor3;
+
+    for(int i = 0; i<n;i++){
+        scanf("%f",&vetor1[i]);
+    }
+    for(int i = 0; i<n;i++){
+        scanf("%f",&vetor2[i]);
+    }
+    if(n>10){
+        printf("Muitos elementos!");
+        return 0;
+    }
+
+    imprimesoma(v3,v1,v2,n);
+
+
+    return 0;
+}
+void imprimesoma(float *v3, float *v1,float *v2,int n){
+    if(n){
+        *v3 = *v2 + *v1;
+        printf("%.2f ",*v3);
+        v3++;
+        v2++;
+        v1++;
+        n--;
+        return imprimesoma(v3,v1,v2,n);
+    }
+    return;
+}

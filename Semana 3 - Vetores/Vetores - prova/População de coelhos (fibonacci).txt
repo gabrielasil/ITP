@@ -1,0 +1,17 @@
+
+#include <stdio.h>
+
+int main(){
+    int meses, i;
+    
+    scanf("%i", &meses);
+    int coelhos[meses];
+    coelhos[0] = 0;
+    coelhos [1] = 1;
+    coelhos [2] = 2;
+    for(i = 3; i<meses; i++){
+        coelhos[i] = coelhos[i-1] + coelhos[i-2];
+    }
+    printf("%i", coelhos[meses-1]);
+    return 0;
+}

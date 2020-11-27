@@ -1,0 +1,60 @@
+#include <stdio.h>
+
+int verificarLinha(int N, int matriz[N][N]){
+    int i, j, contador = 0, verificar = 1;
+    
+    for(i = 0; i < N; i++){
+        for(j = 0; j < N; j++){ 
+            if(matriz[i][j] == 1){ //verificando as linhas 
+                contador += 1;
+            }
+        }
+        if(contador > 1){
+            verificar = 0;
+            contador = 0;
+        }else{
+            contador = 0;
+        }
+    }
+    return verificar;
+}
+
+int verificarColuna(int N, int matriz[N][N]){
+    int i, j, contador = 0, verificar = 1;
+    for(i = 0; i < N; i++){
+        for(j = 0; j < N; j++){
+            if(matriz[j][i] == 1){ //verificando as colunas
+                contador += 1;
+            }
+        }
+        if(contador > 1){
+            verificar = 0;
+            contador = 0;
+        }else{
+            contador = 0;
+        }
+    }
+    return verificar;
+}
+
+int main(){
+    int N, i, j, contador = 0, verificarPermuta = 1;
+    
+    scanf("%i", &N);
+    
+    int matriz[N][N];
+    
+    for(i = 0; i < N; i++){
+        for(j = 0; j < N; j ++){
+            scanf("%i", &matriz[i][j]);
+        }
+    }
+    
+    verificarPermuta = verificarLinha(N, matriz);
+    if(verificarPermuta == 1){
+        verificarPermuta = verificarColuna(N, matriz);
+    }
+
+    printf("%i", verificarPermuta);
+    return 0;
+}

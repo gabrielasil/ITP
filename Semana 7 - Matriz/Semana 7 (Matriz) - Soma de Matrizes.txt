@@ -1,0 +1,44 @@
+#include stdio.h
+
+int main(){
+    int lin, col, l, c;
+    
+    scanf(%i %i, &l, &c);
+    
+    int matriz1[l][c], matriz2[l][c], matrizsoma[l][c];
+    
+    for(lin = 0; lin  l; lin++){
+        for(col = 0; col  c; col++){
+            scanf(%i, &matriz1[lin][col]);
+        }
+    }
+    
+    for(lin = 0; lin  l; lin++){
+        for(col = 0; col  c; col++){
+            scanf(%i, &matriz2[lin][col]);
+        }
+    }
+    
+    for(lin = 0; lin  l; lin++){
+        for(col = 0; col  c; col++){
+            matrizsoma[lin][col] = matriz1[lin][col] + matriz2[lin][col];
+            printf(%i , matrizsoma[lin][col]);
+        }
+        printf(n);
+    }
+    
+     for(lin = 0; lin  l; lin++){
+        for(col = 0; col  c; col++){
+            printf(%i , matriz1[lin][col]);
+        }
+        printf(n);
+    }
+    printf(n);
+    for(lin = 0; lin  l; lin++){
+        for(col = 0; col  c; col++){
+            printf(%i , matriz2[lin][col]);
+        }
+        printf(n);
+    } 
+    return 0;
+}

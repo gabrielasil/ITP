@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+char *verificarSubstring(char str1[], char str2[]){
+    int tam1 = strlen(str1)-1, tam2 = strlen(str2)-1;
+    int i, j, k;
+    
+    for(i = 0; str1[i] != '\0'; i++){
+        if((str2[i+1] >= 'A' && str2[i+1] <= 'Z')&&(str1[i] >= 'a' && str1[i] <= 'z')){
+            str1[i] += 'A' - 'a';
+        }
+    }
+    
+    for(i = 0; i < tam2; i++){ //percorrendo a string da frase
+        if(str1[0] == str2[i]){ //comparando a primeiral letra da palavra com a string da frase
+            j = i+1; //contador a partir de i, que já foi comparado
+            for(k = 1; k < tam1; k++, j++){ //comparando os proximos caracteres da substring com a frase
+                if(str1[k] != str2[j]){ //checando se os proximos caracteres serão diferentes
+                    break; // caso sejam, voltar para o primeiro for
+                }else if(k == tam1-1){ //verificando se a primeira string está inteiramente dentro da segunda
+                    return &str2[i];
+                }
+            }
+        }
+    }
+    return NULL;
+}
+
+int main(){
+    char str1[50], str2[50];
+    char *verificacao = NULL;
+    int i;
+
+    fgets(str1, 50, stdin);
+    fgets(str2, 50, stdin);
+    
+    verificacao = verificarSubstring(str1, str2);
+    if(str1[strlen(str1)-1] == '\n'){
+        str1[strlen(str1)-1] = '\0'; //remove \n do fim da string lida
+    }
+    
+    if(verificacao == NULL){
+        printf("%s não é substring de %s", str1, str2);
+    }else{
+        printf("%s", verificacao);
+    }
+    return 0;
+}

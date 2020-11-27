@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main(){
+    int numeros[8];
+    int i, j, rot, aux;
+    
+    for(i = 0; i < 8; i++){
+        scanf("%i", &numeros[i]);
+    }
+    scanf("%i", &rot);
+    
+    for(j = 0; j < rot; j++){
+        aux = numeros[7];
+        for(i=6; i>=0; i--){
+            numeros[i+1]=numeros[i];
+        }
+        numeros[0] = aux;
+    }
+    for(i=0; i<8; i++){
+        printf("%i ", numeros[i]);
+    }
+    return 0;
+}

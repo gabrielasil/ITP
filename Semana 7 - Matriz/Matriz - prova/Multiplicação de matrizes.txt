@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int main(){
+    int La, Ca, Lb, Cb, i, j, x, aux;
+    
+    scanf("%i %i", &La, &Ca);
+    int matriz1[La][Ca];
+    
+    for(i = 0; i < La; i++){
+        for(j = 0; j < Ca; j++){
+            scanf("%i", &matriz1[i][j]);
+        }
+    }
+    
+    scanf("%i %i", &Lb, &Cb);
+    int matriz2[Lb][Cb];
+    
+    for(i = 0; i < Lb; i++){
+        for(j = 0; j < Cb; j++){
+            scanf("%i", &matriz2[i][j]);
+        }
+    }
+    
+    int matrizResultado[La][Cb];
+    
+    for(i = 0; i < La; i++) {
+		for(j = 0; j < Cb; j++) {
+			for(x = 0; x < Lb; x++) {
+				aux +=  matriz1[i][x] * matriz2[x][j];
+			}
+			matrizResultado[i][j] = aux;
+			aux = 0;
+		}
+	}
+	
+	for(i = 0; i < La; i++) {
+		for(j = 0; j < Cb; j++) {
+            printf("%i ", matrizResultado[i][j]);
+        }
+        printf("\n");
+	}
+	
+    return 0;
+}

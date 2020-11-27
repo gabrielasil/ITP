@@ -1,0 +1,36 @@
+#include<string.h>
+#include<math.h>
+#include<stdio.h>
+
+float pi(float i){
+    if(i != 0)
+        return 4/(2*i+1)*pow(-1,i) + pi(i - 1); 
+    return 4;
+}
+
+float calcularPrecisao(float i, int precisao){
+    float a,b;
+
+    a = pi(i)*pow(10,precisao); 
+    b = a + ((4/(2*i - 1)*pow(10,precisao))*pow(- 1, i - 1)); 
+    if(floor(a) == floor(b)){ 
+        return pi(i); //pi é estável
+    }
+    if(i == 10000){ //se o numero de iterações alcançar 10000
+        return -1;
+    }
+    return calcularPrecisao(i+1,precisao); //precisão da proxima casa decimal
+}
+
+int main(){
+    char vetorPi[20];
+    float b;
+    int precisao;
+
+    scanf("%i",&precisao);
+
+    b = calcularPrecisao(0, precisao);
+
+    sprintf(vetorPi, "Valor de pi %%.%dlf\n",precisao);
+    printf(vetorPi,b);
+}

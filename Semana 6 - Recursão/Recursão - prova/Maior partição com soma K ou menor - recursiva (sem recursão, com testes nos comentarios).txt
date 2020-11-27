@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+int main(){
+    int tamanho, soma, i, j, k, somaAtual = 0, contador = 0, inicio, fim, somaAuxiliar = 0, contadorAuxiliar = 0;
+
+    scanf("%i", &tamanho);
+    scanf("%i", &soma);
+
+    int vetor[tamanho];
+
+    for(i = 0; i < tamanho; i++){
+        scanf("%i", &vetor[i]);
+    }
+    for(i = 0; i < tamanho; i++){
+        for(j = i; j < tamanho; j++){
+            if(vetor[j]+somaAtual <= soma){
+                somaAtual += vetor[j];
+                contador = contador+1;
+            }else break;
+        }
+            /*printf("\n A soma atual no loop e %i\n", somaAtual);
+            printf(" O numero atual avaliado e %i\n", vetor[j-1]); */
+            if(contador > contadorAuxiliar || (contador > contadorAuxiliar && somaAtual > somaAuxiliar)){
+                inicio = j - contador; //definir o inicio da soma
+                fim = inicio + contador; //definir o fim da soma
+                contadorAuxiliar = contador; //guardar contador para comparação
+                somaAuxiliar = somaAtual; //guardar a soma atual para comparação
+                somaAtual = 0;
+                contador = 0;
+            }
+            somaAtual = 0;
+            contador = 0;
+            /* printf("Inicio = %i, Fim = %i, Vetores atuais guardados são: ", inicio, fim); */
+            
+    }
+    if(contadorAuxiliar == 0){ //se o primeiro número ja estourar a soma
+        printf("Partição Vazia");
+    }else{
+        for(i = inicio; i < fim; i++){ //se houver numeros que fazem parte da soma
+        printf("%i ", vetor[i]);
+    }
+    
+    
+    }
+    /* printf("\nA soma auxiliar é %i\n", somaAuxiliar);
+    printf("\nA soma atual é %i\n", somaAtual);
+    printf("O contador Atual é %i\n", contador);
+    printf("O contador Auxiliar é %i\n", contadorAuxiliar);
+    printf("O inicio é %i\n", inicio);
+    printf("O fim é %i\n", fim); */
+    return 0;
+}

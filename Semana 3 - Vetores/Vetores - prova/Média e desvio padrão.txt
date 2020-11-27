@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+    float notas[10], media, desvio, desvio2;
+    int i;
+    for(i = 0; i<10; i++){
+        scanf("%f", &notas[i]);
+        media += notas[i];
+    }
+    media /= 10;
+    for(i = 0; i<10; i++){
+        desvio += pow(notas[i] - media, 2);
+    }
+    desvio /= 9;
+    printf("%.2f ", media);
+    printf("%.2f", sqrt(desvio));
+    return 0;
+}

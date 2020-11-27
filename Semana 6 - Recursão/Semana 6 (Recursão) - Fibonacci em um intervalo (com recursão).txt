@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+int contador = 0;
+
+int isFib(int n1, int i, int fib1, int fib2){
+    int fibaux = 0;
+    if(n1 == 0 || n1 == 1){ //se n1 for 0, ou n1 for menor que 0
+        return 0; //não é fib
+    }
+    fibaux = fib1+fib2; //incrementar fib
+    if(fibaux>n1){ //se fib atual for maior que n1
+        return 1; //n1 não é fib, logo retornar true
+    }else if(fibaux == n1){ //se fib atual for igual a n1
+        return 0; //n1 é fib, logo retornar false
+    }
+    return isFib(n1, i+1, fib2, fibaux); //se fib for menor que n1, incrementar fib até que seja igual ou maior que n1
+}
+
+int numFib(int n1, int n2){
+    int i;
+    if(n2 == n1+1){ //se o n2 atual for igual ao n1+1, parar
+        return contador;
+    }
+    numFib(n1, n2-1); // começar a verificar de n2-1
+
+    if(isFib(n2-1, 0, 0, 1) == 0){ //se n2-1 for fib, printar o número
+        if(n2-1 == 1){
+          contador += 2;
+        }else
+        contador++;
+    }
+    return contador;
+}
+
+int main(){
+    int n1, n2;
+    
+    scanf("%i %i", &n1, &n2);
+
+    printf("Existem %i números de fibonacci entre %i e %i", numFib(n1, n2), n1, n2);
+
+    return 0;
+}

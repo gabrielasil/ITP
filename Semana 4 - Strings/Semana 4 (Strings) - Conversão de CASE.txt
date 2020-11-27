@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main(){
+    char teste[256];
+    char caractere[256];
+    int i;
+    
+    for(i = 0; teste[i] != '@'; i++){
+        scanf("%s", &teste[i]);
+      
+        if(isalpha(teste[i])){
+            caractere[i] = teste[i];
+            if(caractere[i] >= 'A' && caractere[i] <= 'Z'){
+                caractere[i] += 'a' - 'A';
+            }else if(caractere[i]>= 'a' && caractere[i] <= 'z'){
+                caractere[i] += 'A' - 'a';
+            }
+        }else if(teste[i] == '@'){
+            caractere[i] = '\0';
+            break;   
+        }else{
+        i--;
+        }
+    }  
+    
+    for(i = 0; caractere[i] != '\0'; i++){
+        printf("%c ", caractere[i]);
+    }
+    
+    return 0;
+}

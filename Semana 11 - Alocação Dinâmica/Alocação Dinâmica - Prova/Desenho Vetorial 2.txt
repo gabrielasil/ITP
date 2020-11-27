@@ -1,0 +1,169 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+typedef struct {
+  float x, y;
+} Point;
+
+typedef struct {
+  int numPoints;
+  Point *points;
+} Object;
+
+typedef struct {
+  int num;
+  int size;
+  Object **objs;
+} ObjectArray;
+
+ObjectArray* createObjectArray(){
+    ObjectArray *lista = malloc(sizeof(ObjectArray));
+    
+    lista->num = 0;
+    lista->size = 10;
+    lista->objs = (Object **) malloc(10*sizeof(Object));
+    
+    return lista;
+    
+}
+
+Object* createTriangle(Point p1, Point p2, Point p3){
+    Object *triangulo = malloc(sizeof(Object));
+    
+    triangulo->points=(Point *) malloc(3*sizeof(Point));
+  
+    triangulo->numPoints=3;
+
+    triangulo->points[0]=p1;
+    triangulo->points[1]=p2;
+    triangulo->points[2]=p3;
+
+    return triangulo;
+}
+Object* createRect(Point topleft, float width, float height){
+    Object *retangulo = malloc(sizeof(Object));
+    
+    retangulo->points=(Point *) malloc(4*sizeof(Point));
+  
+    retangulo->numPoints=4;
+    
+    Point topright, botright, botleft;
+    
+    topright.x = topleft.x + width;
+    topright.y = topleft.y;
+    botright.x = topright.x;
+    botright.y = topright.y - height;
+    botleft.x = botright.x - width;
+    botleft.y = botright.y;
+    
+    retangulo->points[0]=topleft;
+    retangulo->points[1]=topright;
+    retangulo->points[2]=botright;
+    retangulo->points[3]=botleft;
+
+    return retangulo;
+}
+Object* createRegularFigure(Point center, int num, float distance){
+    Object *regularFigure = malloc(sizeof(Object));
+    
+    regularFigure->points=(Point *) malloc(num*sizeof(Point));
+  
+    regularFigure->numPoints=num;
+    
+    float angulo = (2 * M_PI) / num;
+    
+    for(int i = 0; i < regularFigure->numPoints; i++){
+        regularFigure->points[i].x = center.x + distance * cos(i * angulo);
+        regularFigure->points[i].y = center.y + distance * sin(i * angulo);
+    }
+
+    return regularFigure;
+}
+
+float adjust(float v) {
+    return (v < 0 && v > -0.0001) ? -v : v;
+}
+
+void printObject(Object *obj){
+    for(int i = 0; i < obj->numPoints; i++){
+        obj->points[i].x = adjust(obj->points[i].x);
+        obj->points[i].y = adjust(obj->points[i].y);
+        printf("(%.2f,%.2f)", obj->points[i].x, obj->points[i].y);
+    }
+}
+
+void increaseSize(ObjectArray *lista){
+    int tam = lista->size;
+    tam = tam * 2;
+    lista->objs = realloc(lista->objs,  tam * sizeof(Object));
+}
+
+void destroy(ObjectArray *lista){
+    int tam = lista->num;
+    for(int i = 0; i < tam; i++){
+        free(lista->objs[i]);
+    }
+    free(lista->objs);
+    lista->num = NULL;
+    lista->size = NULL;
+    lista = NULL;
+}
+
+int main(){
+    int forma = 0, qtd = 0;
+    ObjectArray *lista;
+    lista = createObjectArray();
+    
+    scanf("%i", &qtd);
+    for(int i = 0; i < qtd; i++){
+        scanf("%i", &forma);
+        if(forma == 0){
+            Point p1, p2, p3;
+            scanf("%f %f %f %f %f %f", &p1.x, &p1.y, &p2.x, &p2.y, &p3.x, &p3.y);
+            
+            if(lista->objs[lista->num] == lista->objs[lista->size]){
+                increaseSize(lista);
+            }
+            
+            lista->objs[lista->num] = createTriangle(p1, p2, p3);
+            
+            printObject(lista->objs[lista->num]);
+            
+            lista->num++;
+            printf("\n");
+        }else if(forma == 1){
+            Point p1;
+            float width, height;
+            scanf("%f %f %f %f", &p1.x, &p1.y, &width, &height);
+            
+            if(lista->objs[lista->num] == lista->objs[lista->size]){
+                increaseSize(lista);
+            }
+            
+            lista->objs[lista->num] = createRect(p1, width, height);
+            
+            printObject(lista->objs[lista->num]);
+            
+            lista->num++;
+            printf("\n");
+        }else if(forma == 2){
+            Point p1;
+            float distance, num;
+            scanf("%f %f %f %f", &p1.x, &p1.y, &distance, &num);
+            
+            if(lista->objs[lista->num] == lista->objs[lista->size]){
+                increaseSize(lista);
+            }
+            
+            lista->objs[lista->num] = createRegularFigure(p1, num, distance);
+            
+            printObject(lista->objs[lista->num]);
+            
+            lista->num++;
+            printf("\n");
+        }
+    }
+    destroy(lista);
+    return 0;
+}

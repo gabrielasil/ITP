@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main(){
+    char a, b, d;
+    scanf("%c %c", &a, &b);
+    d = a - b;
+    
+    switch (d){
+        case 0:
+            printf("Caracteres %c e %c iguais", a, b);
+            break;
+        default:
+            if (d<0){
+                printf("Caractere %c antecede %c", a, b);
+            }
+            else{
+                printf("Caractere %c antecede %c", b, a);
+            }
+    }
+    return 0;
+}

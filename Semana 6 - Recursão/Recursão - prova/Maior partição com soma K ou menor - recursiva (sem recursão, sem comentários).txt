@@ -1,0 +1,48 @@
+#include <stdio.h>
+
+int main(){
+    int tamanho, soma, i, j, k, somaAtual = 0, contador = 0, inicio, fim, somaAuxiliar = 0, contadorAuxiliar = 0;
+
+    scanf("%i", &tamanho);
+    scanf("%i", &soma);
+
+    int vetor[tamanho];
+
+    for(i = 0; i < tamanho; i++){
+        scanf("%i", &vetor[i]);
+    }
+    for(i = 0; i < tamanho; i++){
+        for(j = i; j < tamanho; j++){
+            if(vetor[j]+somaAtual <= soma){
+                somaAtual += vetor[j];
+                contador = contador+1;
+            }else break;
+        }
+            if(contador > contadorAuxiliar || (contador > contadorAuxiliar && somaAtual > somaAuxiliar)){
+                inicio = j - contador; //definir o inicio dos numeros somados
+                fim = inicio + contador; //definir o fim dos numeros somados
+                contadorAuxiliar = contador; //guardar contador para comparação
+                somaAuxiliar = somaAtual; //guardar a soma atual para comparação
+                somaAtual = 0; //reset
+                contador = 0;
+            }
+            somaAtual = 0;
+            contador = 0; //resetar contador e soma mesmo se o novo conjunto de numeros não for maior que o anterior OU (não for maior que o anterior E a soma também não for maior)
+            
+    }
+    int vetorp[contadorAuxiliar];
+    
+    for( j = 0, i = inicio; i < fim; i++, j++){ //passando os valores para outro vetor
+        vetorp[j] = vetor[i];
+    }
+    if(contadorAuxiliar == 0){ //se todos os numeros estourarem a soma
+        printf("Partição Vazia");
+    }else{
+        for(i = 0; i < contadorAuxiliar; i++){ //se houver numeros que fazem parte da soma
+        printf("%i ", vetorp[i]);
+    }
+    
+    
+    }
+    return 0;
+}

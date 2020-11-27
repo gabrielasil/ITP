@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+void cifradecesar(int tam, int deslocamento, char cifra[50]){
+    int i;
+    char aux;
+    for(i = 0; i < tam; i++){
+        cifra[i] = cifra[i] - deslocamento;
+        if(cifra[i]<'A'){
+          cifra[i] = 'Z' - (('A' - cifra[i])-1);
+        }
+    }
+}
+
+int main(){
+    int N, i, cifraTam;
+    char cifra[50];
+    
+    scanf("%i", &N);
+    int deslocamento;
+    
+    for(i = 0; i < N; i++){
+        scanf("%s", cifra);
+        scanf("%i", &deslocamento);
+        cifraTam = strlen(cifra);
+        cifradecesar(cifraTam, deslocamento, cifra);
+        printf("%s\n", cifra);
+    }
+    
+    return 0;
+}

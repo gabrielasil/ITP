@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+
+void inversora(char *s,int i,int n){
+    char aux = '\0';
+    if(i <= n/2){
+        aux = *(s + i);
+        *(s + i) = *(s + n - i);
+        *(s + n - i) = aux;
+        i++;
+        return inversora(s,i,n);
+    }
+    return;
+}
+int main(){
+
+    char string[20];
+    char *s = &string;
+
+    scanf("%s",string);
+
+    int n = strlen(string) - 1;
+
+    inversora(s,0,n);
+
+    printf("%s", string);
+}

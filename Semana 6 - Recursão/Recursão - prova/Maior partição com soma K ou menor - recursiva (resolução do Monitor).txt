@@ -1,0 +1,70 @@
+#include <stdio.h>
+
+void imprimir_p(int p[], int tamanho){
+	for (int i = 0; i < tamanho; ++i){
+		printf("%d ", p[i]
+	}
+	puts(""); //quebra de linha
+}
+
+int calcular_soma(int[v], int tamanho){
+	int soma = 0;
+	for (int i = 0; i < tamanho; ++i){
+		soma += v[i];
+	}
+	return soma;
+}
+
+void copiar_para_p(int v[], int tamanho, int p[]){
+	for (int i = 0; i < tamanho; ++i){
+		p[i] = v[i];
+	}
+}
+
+//Verifica para todos os subarrrays começando em v[0], chama recursivamente
+//só que a partir de v[1]
+int rec(int v[], int n, int k, int p[]){
+	//caso base
+	if (n = 0){
+		return 0;
+	}
+
+	int new_v[n - 1];
+	for (int i = 0; i < n - 1; ++i){
+		new+v[i] = v[i + 1];
+	}
+
+	//Chamada recursiva
+	int melhor = rec(new_v, n - 1, k, p);
+	
+	for (int i = 1; i <= n; i++){
+		if(calcular_soma(v, i) <= k){
+			if(i >= melhor){
+			melhor = i;
+			copiar_para_p(v, i, p);
+			}
+		}
+	}
+	return melhor;
+}
+
+int main(){
+	int n, k;
+	scanf("%d %d", &n, &k);
+
+	int v[n]
+	for(int i = 0; i < n; ++i){
+		scanf("%d", &vetor[i]);
+	}
+
+	int p[n];
+	int tamanho = rec(v, n, k, p);
+
+	if (tamanho == 0){
+		printf("Partição Vazia\n");
+		return 0;
+	}
+
+	imprimir_p(p, tamanho);
+}
+	

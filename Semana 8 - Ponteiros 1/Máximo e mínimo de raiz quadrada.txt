@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <math.h>
+ 
+void ler_matriz(int tamanho, int (*matriz)[tamanho]){
+  for(int i = 0; i < tamanho; i++){
+    for(int j = 0; j < tamanho; j++){
+      scanf("%d", &matriz[i][j]);
+    }
+  }
+}
+ 
+void MAXMIN(int tamanho, int (*matriz)[tamanho], int *valor_max, int *i_max, int *j_max,
+ int *valor_min,int *i_min, int *j_min){
+ 
+  *valor_max = matriz[0][0];
+  *valor_min = matriz[0][0];
+  *i_max = 0;
+  *j_max = 0;
+  *i_min = 0;
+  *j_min = 0;
+ 
+  for(int i = 0; i < tamanho; i++){
+    for(int j = 0; j < tamanho; j++){
+      if(matriz[i][j] > *valor_max){
+        *valor_max = matriz[i][j];
+        *i_max = i;
+        *j_max = j;
+      }
+      else if(matriz[i][j] < *valor_min){
+        *valor_min = matriz[i][j];
+        *i_min = i;
+        *j_min = j;
+      }
+    }
+  }
+ 
+}
+ 
+ 
+int main(void) {
+ 
+  int tamanho, max, min;
+  int i_max, j_max, i_min, j_min;
+ 
+  scanf("%d", &tamanho);
+ 
+  int matriz[tamanho][tamanho];
+ 
+  ler_matriz(tamanho, matriz);
+ 
+  MAXMIN(tamanho, matriz, &max, &i_max, &j_max, &min, &i_min, &j_min);
+ 
+  printf("%d %d %d %d %d %d\n", max, i_max, j_max, min, i_min, j_min);
+ 
+  
+  return 0;
+}

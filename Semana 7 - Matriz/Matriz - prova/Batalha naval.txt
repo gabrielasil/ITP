@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+int main(){
+    int A, L, i, j, lin, col, linTiro = 1, colTiro = 1;
+    
+    scanf("%i", &A);
+    scanf("%i", &L);
+    int grid[A+2][L+2]; //mais 2 de linha e coluna para representar as bordas
+    for(int i = 0; i<A + 2; i++){ //preenchendo tudo com 0
+        for(int j = 0; j<L + 2 ; j++){
+            grid[i][j] = 0;
+        }
+    }
+    
+    
+    for(lin = 1; lin < A+1; lin++){ //passando o grid da questão para o grid atual
+        for(col = 1; col < L+1; col++){
+            scanf("%i", &grid[lin][col]);
+        }
+    }
+    
+    scanf("%i", &linTiro);
+    scanf("%i", &colTiro); //receber informação de linha e coluna do tiro
+    
+    while(linTiro>=1 && linTiro<=A && colTiro>=1 &&colTiro<=L){
+        if(grid[linTiro][colTiro] == 0){ //se for na agua, 0
+            printf("1\n");
+        }else if(grid[linTiro][colTiro] == 1){ //se for em navio, verificar se não tem nada ao redor
+            if(grid[linTiro - 1][colTiro] == 1|| grid[linTiro + 1][colTiro] == 1 || grid[linTiro][colTiro - 1] == 1 || grid[linTiro][colTiro + 1] == 1){
+                    printf("2\n");  //acertou em parte do navio mas nao afundou      
+                }else{
+                    printf("3\n");  //acertou em parte do navio e afundou
+                }
+        }else if(grid[linTiro][colTiro] == 4){ //acertou em parte do navio
+            printf("4\n");
+    
+        }
+        grid[linTiro][colTiro] = 4;
+        scanf("%i",&linTiro);
+        scanf("%i",&colTiro);
+    }
+    return 0;
+}

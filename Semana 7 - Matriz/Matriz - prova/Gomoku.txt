@@ -1,0 +1,92 @@
+#include <stdio.h>
+
+int percorrerColuna(int l, int c, int matriz[15][15], int jogadorAtual, int contador){
+    while(contador != 5){
+        if(matriz[l][c] == jogadorAtual){
+            contador += 1;
+            l += 1;
+        }else{
+            return 0;    
+        }if(contador==5){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int percorrerLinha(int l, int c, int matriz[15][15], int jogadorAtual, int contador){
+    while(contador != 5){
+        if(matriz[l][c] == jogadorAtual){
+            contador += 1;
+            c += 1;
+        }else{
+            return 0;    
+        }if(contador==5){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int percorrerDiag1(int l, int c, int matriz[15][15], int jogadorAtual, int contador){
+    while(contador != 5){
+        if(matriz[l][c] == jogadorAtual){
+            contador += 1;
+            c += 1;
+            l += 1;
+        }else{
+            return 0;    
+        }if(contador==5){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int percorrerDiag2(int l, int c, int matriz[15][15], int jogadorAtual, int contador){
+    while(contador != 5){
+        if(matriz[l][c] == jogadorAtual){
+            contador += 1;
+            c -= 1;
+            l += 1;
+        }else{
+            return 0;    
+        }if(contador==5){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main(){
+    int linha = 0, coluna = 0, diag1 = 0, diag2 = 0;
+    int l, c;
+    int matriz[15][15];
+    
+    for(l = 0; l < 15; l++){
+        for(c = 0; c < 15; c++){
+            scanf("%i", &matriz[l][c]);
+        }
+    }
+    
+    for(l = 0; l < 15; l++){
+        for(c = 0; c < 15; c++){
+            if(matriz[l][c] == 1 || matriz[l][c] == 2){
+                coluna = percorrerColuna(l+1, c, matriz, matriz[l][c], 1);
+                linha = percorrerLinha(l, c+1, matriz, matriz[l][c], 1);
+                diag1 = percorrerDiag1(l+1, c+1, matriz, matriz[l][c], 1);
+                diag2 = percorrerDiag1(l+1, c-1, matriz, matriz[l][c], 1);
+            }if(coluna == 1 || linha == 1 || diag1 == 1 || diag2 == 1){
+                printf("%i", matriz[l][c]);
+                break;
+            }
+        }
+        if(c < 15){
+            break;
+        }
+    }
+    if(l == 15){
+        printf("0");
+    }
+    return 0;
+}

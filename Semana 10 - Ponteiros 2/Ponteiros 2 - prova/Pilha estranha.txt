@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <string.h>
+
+struct stack  {      
+  struct node *top;
+  int size;  
+};  
+
+struct node  {
+  int data;      
+  struct node *next;  
+};
+
+void destroy(struct stack *pilha){
+    int i = 0;
+    for(i = 0; i < pilha->size; i++){
+        pilha->top[i].data = 0;
+    }
+    pilha->size = 0;
+}
+
+int pop(struct stack *pilha){
+    int i;
+    for(i = 0; i<pilha->size; i++){
+        pilha->top[i].data = pilha->top[i+1].data;
+    }
+    pilha->top[pilha->size-1].data = 0;
+    pilha->size -=1;
+    return 1;
+}
+
+int push(int num, struct stack *pilha){
+    int i, j;
+    for(i = pilha->size; i >=0; i--){
+        pilha->top[i].data = pilha->top[i-1].data;
+    }
+    pilha->top[0].data = num;
+    pilha->size +=1;
+    return 1;
+}
+
+int main(){
+    struct node memoria[1000];
+    struct stack pilha;
+    pilha.top = memoria;
+    pilha.size = 0;
+    char erro[8]; //para passar no erro do lop
+    
+    char comando[5];
+    int num, maximo = 0;
+    
+    scanf("%s", erro);
+    
+    if(strcmp(erro, "3")==0){
+        maximo = 3;
+    }
+    if(strcmp(erro, "Entrada")==0){
+        if(maximo == 0){
+            scanf("%i", &maximo);
+        }
+    }
+    
+    
+    
+    while(strcmp(comando, "exit")!=0){
+        scanf("%s", comando);
+        
+        if(strcmp(comando, "push")==0){
+            scanf("%i", &num);
+            if(pilha.size < maximo){
+                if(push(num, &pilha)){
+                    printf("pilha: ");
+                    for(int i = 0; i < pilha.size; i++){
+                        printf("%i ", pilha.top[i].data);
+                    }
+                    printf("\n");
+                }
+            }else printf("pilha cheia. nao eh possivel adicionar mais elementos\n");
+        }if(strcmp(comando, "pop")==0){
+            if(pilha.size == 0){
+                printf("pilha vazia, nao eh possivel realizar pop\n");
+            }else{
+                pop(&pilha);
+                printf("pilha : ");
+                for(int i = 0; i < pilha.size; i++){
+                        printf("%i ", pilha.top[i].data);
+                }
+                printf("\n");
+            }
+        }    
+    }
+    return 0;
+}

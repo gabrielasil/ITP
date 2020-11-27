@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <string.h>
+typedef struct{
+    int matricula;
+    char nome[10];
+} Aluno;
+
+typedef struct{
+    int tamanho;
+    Aluno lista[10];
+    int utilizados;
+} Alunos;
+
+void ordenar(Alunos *alunos){
+    Aluno aux;
+    int matriculaAux;
+    for(int i = alunos->utilizados-1; i >=0; i--){
+        if(alunos->lista[i].nome[0] < alunos->lista[i-1].nome[0]){
+            strcpy(aux.nome, alunos->lista[i-1].nome);
+            matriculaAux = alunos->lista[i-1].matricula;
+            strcpy(alunos->lista[i-1].nome, alunos->lista[i].nome);
+            alunos->lista[i-1].matricula = alunos->lista[i].matricula;
+            strcpy(alunos->lista[i].nome, aux.nome);
+            alunos->lista[i].matricula = matriculaAux;
+            
+        }
+    }
+    printf("ordenacao completa\n");
+}
+
+void status(Alunos *alunos){
+    int porcentagem = (alunos->utilizados * 100)/alunos->tamanho;
+    printf("memoria ocupada: %i/%i ou %i%%\n", alunos->utilizados, alunos->tamanho, porcentagem);
+    
+}
+
+void imprimir(Alunos *alunos){
+    printf("Alunos\n");
+    for(int i = 0; i < alunos->utilizados; i++){
+        printf("matricula: 00%i\nnome: ", alunos->lista[i].matricula);
+        printf("%s\n", alunos->lista[i].nome);
+    }
+}
+
+void inserir(Alunos *alunos){
+    scanf("%i", &alunos->lista[alunos->utilizados].matricula);
+    scanf("%s", &alunos->lista[alunos->utilizados].nome);
+    printf("inserido 00%i\n", alunos->lista[alunos->utilizados].matricula);
+    
+}
+
+int main(){
+    Alunos alunos;
+    alunos.utilizados = 0;
+    char comando[10];
+    scanf("%i", &alunos.tamanho);
+    
+    
+    while(strcmp(comando, "sair")!=0){
+        scanf("%s", comando);
+        if(strcmp(comando, "inserir")==0){
+            inserir(&alunos);
+            alunos.utilizados += 1;
+        }if(strcmp(comando, "imprimir")==0){
+            imprimir(&alunos);
+        }if(strcmp(comando, "status")==0){
+            status(&alunos);
+        }if(strcmp(comando, "ordenar")==0){
+            ordenar(&alunos);
+        } 
+    }
+    
+    
+    return 0;
+}

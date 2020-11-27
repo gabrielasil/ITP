@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int verificarDigito(int x, int p){
+  int i, aux = x;
+  for(i = 0; i <= p; i++){
+    aux = x % (10 * (i+1));
+    x /= 10;
+  }
+return aux;
+}
+
+
+int main(){
+
+  int x, p, resultado;
+
+  scanf("%i", &x);
+  scanf("%i", &p);
+
+  resultado = verificarDigito(x, p);
+
+  printf("O digito na posicao solicitada e %i", resultado);
+
+}

@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main(){
+
+    float a, b, v;
+    printf("Entre com os operandos:\n");
+    scanf("%f", &a);
+    scanf("%f", &b);
+    
+    if(a>0 && b < 0){
+        v = a * b;
+        printf("Valor de V=%.1f\n", v);
+    }
+    else{
+        if (a < 0){
+            v = a + b;
+            printf("Valor de V=%.1f\n", v);
+        }else{
+            v = a / b;
+            printf("Valor de V=%.1f\n", v);
+        }
+    }
+    return 0;
+}

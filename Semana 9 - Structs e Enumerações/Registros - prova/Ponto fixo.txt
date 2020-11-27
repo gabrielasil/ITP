@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <math.h>
+
+typedef struct{
+    int inteiro;
+    int escala;
+}numero;
+
+void to_string(numero A, char strA[]){
+    sprintf(strA, "fixo(%i,%i)", A.inteiro, A.escala);
+}
+
+numero convert(numero A, int escalaNova){
+    int aux;
+    if(A.escala < escalaNova){
+        A.inteiro = A.inteiro * (pow(10,-(A.escala)) / pow(10, -(escalaNova)));
+        A.escala = escalaNova;
+    }else{
+        A.inteiro = A.inteiro * (pow(10,-(A.escala)) / pow(10, -(escalaNova)));
+        A.escala = escalaNova;
+    }
+    return A;
+}
+
+numero add(numero A, numero B, int escalaC){
+    numero C;
+    if(A.escala != B.escala){
+        A = convert(A, B.escala);
+    }
+    C.inteiro = A.inteiro +B.inteiro;
+    C.escala = A.escala;
+    if(C.escala != escalaC){
+        C = convert(C, escalaC);
+    }
+    return C;
+}
+
+int main(){
+    numero A, B, C;
+    char strA[15], strB[15],strC[15];
+    scanf("%i %i", &A.inteiro, &A.escala);
+    scanf("%i %i", &B.inteiro, &B.escala);
+
+    scanf("%i", &C.escala);
+    to_string(A, strA);
+    to_string(B, strB);
+    C = add(A, B, C.escala);
+    to_string(C, strC);
+    printf("%s + %s = %s", strA, strB, strC);
+}

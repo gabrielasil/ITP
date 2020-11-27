@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <math.h>
+
+double fat(int i){
+  if(i == 0){
+        return 1;
+    }else{
+      return i*fat(i - 1);
+    }
+}
+
+double somatorio(int x, int i){
+  double resultado;
+  if(i != 1){
+    return pow(x, i)/fat(i) + somatorio(x, i-1);
+  }
+  return x+1;
+}
+
+int main(void) {
+  int x, i;
+
+  scanf("%i", &x);
+  scanf("%i", &i);
+
+  printf("%.6f\n",somatorio(x,i));
+  printf("%.6f", exp(x));
+}

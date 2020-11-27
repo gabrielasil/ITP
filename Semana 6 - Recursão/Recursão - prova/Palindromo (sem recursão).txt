@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+ int checarPalindromo(char frase[]){
+   int i, tam;
+   tam = strlen(frase);
+    for(i = 1; i <=tam/2; i++){
+        if(frase[i-1] != frase[tam-i]){
+            return 0;
+        }
+    }
+   return 1;
+ }
+
+int main(){
+  char frase[100];
+  int tamanho, posicao, i;
+
+  fgets(frase, 100, stdin);
+  tamanho = strlen(frase);
+  for(int i=0; i<tamanho; i++){
+    if(frase[i] == '\n') frase[i] = '\0';
+    if(frase[i] == '\r') frase[i] = '\0';
+  }
+    printf("O texto %s", frase);
+  for (i = 0, posicao = 0; i < tamanho; i++, posicao++) {
+        if (frase[posicao] == ' ') posicao++, tamanho--;
+        frase[i] = frase[posicao];
+    }
+    if(checarPalindromo(frase) == 1){
+        printf(" é palíndromo");
+    }else printf(" não é palíndromo");
+}

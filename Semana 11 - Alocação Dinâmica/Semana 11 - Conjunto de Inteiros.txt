@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef unsigned int UINT;
+
+typedef struct {
+  UINT size;   // tamanho do array alocado para os elementos do conjunto
+  UINT num;    // número de elementos atualmente alocados
+  int *array;  // array com os elementos
+} Set;
+
+
+Set* create(){
+    Set *sAux = malloc(sizeof(Set));
+    sAux->size = 10;
+    sAux->num = 0;
+    sAux->array = malloc(10 * sizeof(int));
+    
+    return sAux;
+}
+
+int has(Set *s, int value){
+    for(int i = 0; i < s->num; i++){
+        if(s->array[i] == value){
+            return 1;
+        }
+    }
+    return 0;
+}
+void add(Set *s, int value){
+    if(s->num == s->size){
+       int tamAux = s->size;
+       tamAux = tamAux + 10;
+       s->array = realloc(s->array, tamAux * sizeof(int));
+       s->size = tamAux;
+    }
+    if(s->num != 0){
+        int verify = has(s, value);
+        if(verify == 0){
+            s->array[s->num] = value;
+            s->num++;
+        }
+    }else{
+        s->array[s->num] = value;
+        s->num++;
+    }
+    
+    
+}
+
+int main(){
+    Set *s1;
+    Set *s2;
+    s1 = create();
+    
+    s2 = create();
+    
+    int tam1 = 0, tam2 = 0, n = 0, verify = 0;
+    
+    scanf("%i", &tam1);
+    for(int i = 0; i < tam1; i++){
+        scanf("%i", &n);
+        add(s1, n);
+    }
+    scanf("%i", &tam2);
+    for(int i = 0; i < tam2; i++){
+        scanf("%i", &n);
+        add(s2, n);
+    }
+    
+    for(int i = 0; i < s2->num; i++){
+        verify = has(s1, s2->array[i]);
+        if(verify == 1){
+            printf("%i ", s2->array[i]);
+        }
+    }
+    
+    printf("\n");
+    printf("%i %i\n", s1->num, s1->size);
+    printf("%i %i\n", s2->num, s2->size);
+}

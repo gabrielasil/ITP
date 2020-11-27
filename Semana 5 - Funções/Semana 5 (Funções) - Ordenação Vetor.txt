@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+void ordenar(int tam, int vetor[]){
+    int i, j, aux;
+    for(i = 0; i < tam - 1; i++){
+        for(j = i+1; j < tam; j++){
+            if(vetor[i] > vetor[j]){
+                aux = vetor[i];
+                vetor[i] = vetor[j];
+                vetor[j] = aux;
+            }
+        }
+    }
+}
+
+int main(){
+    int numVetores, i, j;
+    int tamVetores[100];
+    int vetor[500];
+    char saida[500];
+    
+    scanf("%i", &numVetores);
+    for(i = 0; i < numVetores; i++){
+        scanf("%i", &tamVetores[i]);
+    }
+    for(i = 0; i < numVetores; i++){
+        for(j = 0; j <tamVetores[i]; j++){
+            scanf("%i", &vetor[j]);
+        }
+        
+        ordenar(tamVetores[i], vetor);
+    
+        for(j = 0; j < tamVetores[i]; j++){
+            printf("%i ", vetor[j]);
+        }
+        printf("\n");
+    
+    }
+    
+    return 0;
+}

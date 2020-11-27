@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main(){
+    char str1[30], str2[30];
+    int i, j = 0, k, tam1, tam2, inicio = 0;
+
+    fgets(str1, 30, stdin);
+    fgets(str2, 30, stdin);
+
+    tam1 = strlen(str1) - 1;
+    tam2 = strlen(str2) - 1;
+    for(i = 0; i < tam2; i++){ //percorrendo a string da frase
+        if(k != tam1){ //verificando se a primeira string já não foi completamente analisada
+            if(str1[0] == str2[i]){ //comparando a primeiral letra da palavra com a string da frase
+                inicio = i+1; //caso seja igual, marcar o inicio da substring
+                j = i+1; //contador a partir de i, que já foi comparado
+
+                for(k = 1; k < tam1; k++, j++){ //comparando os proximos caracteres da substring com a frase
+                    if(str1[k] != str2[j]){ //checando se os proximos caracteres serão diferentes
+                        inicio = 0; //caso sejam, resetar o inicio da substring
+                        break; //voltar para o primeiro for
+                    }else if(k == tam1){ //caso a string tenha sido totalmente analisada
+                        break;
+                    }
+                }        
+            }
+        }else break;
+    }
+    printf("%i", inicio);
+    return 0;
+}

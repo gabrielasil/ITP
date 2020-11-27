@@ -1,0 +1,115 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdbool.h>
+
+typedef struct pessoa_t{
+  char nome[20];
+  int id;
+}pessoa;
+
+typedef struct bd_pessoas_t{
+ pessoa pessoas[20];
+ int num_pessoas;
+}bd_pessoas;
+
+typedef struct irmao_t{
+  int id1;
+  int id2;
+}irmao;
+
+typedef struct bd_irmaos_t{
+  irmao irmaos[50];
+  int num_relacoes;
+}bd_irmaos;
+
+void imprimir_irmaos(bd_pessoas people,bd_irmaos brothers,int id){
+    int verdadeiro = 0;
+    int j;
+    int k;
+    for (j = 0;j<people.num_pessoas;j++){
+        if(id == people.pessoas[j].id){
+            break;
+        }
+    }
+
+    for(int i = 0; i<brothers.num_relacoes;i++){
+        if(id == brothers.irmaos[i].id1){
+            for (k = 0;k<people.num_pessoas;k++){
+                if(brothers.irmaos[i].id2 == people.pessoas[k].id){
+                    break;
+                }
+            }
+            verdadeiro = 1;
+            printf("%s é irmão de %s\n", people.pessoas[k].nome,people.pessoas[j].nome);
+        }
+        if(id == brothers.irmaos[i].id2){
+            for (k = 0;k<people.num_pessoas;k++){
+                if(brothers.irmaos[i].id1 == people.pessoas[k].id){
+                    break;
+                }
+            }
+            verdadeiro = 1;
+            printf("%s é irmão de %s\n", people.pessoas[k].nome,people.pessoas[j].nome);
+        }
+    }
+    if(!verdadeiro){
+        printf("%s não tem irmãos cadastrados",people.pessoas[j].nome);
+    }
+}
+
+bd_pessoas inserir_pessoa(bd_pessoas people, pessoa person){
+     for (int i = 0;i<people.num_pessoas;i++){
+        if(person.id == people.pessoas[i].id){
+            printf("Identificador %i duplicado!\n",person.id);
+            return people;
+        }
+    }
+    people.pessoas[people.num_pessoas] = person;
+    people.num_pessoas += 1;
+    return people;
+}
+
+bd_irmaos inserir_irmao(irmao brother,bd_irmaos brothers){
+    for (int i = 0;i<brothers.num_relacoes;i++){
+        if((brother.id1 == brothers.irmaos[i].id1 && brother.id2 == brothers.irmaos[i].id2) || (brother.id1 == brothers.irmaos[i].id2 && brother.id2 == brothers.irmaos[i].id1)){
+            printf("Parentesco %i %i já cadastrado!\n",brother.id1,brother.id2);
+            return brothers;
+        }
+    }
+    brothers.irmaos[brothers.num_relacoes] = brother;
+    brothers.num_relacoes +=1;
+    return brothers;
+}
+
+int main(){
+    bd_irmaos irmaos;
+    irmao irmao;
+    bd_pessoas pessoas;
+    pessoa pessoa;
+    char string[50];
+    char comando;
+    int id;
+
+    scanf("%c",&comando);
+    
+    pessoas.num_pessoas = 0;
+    irmaos.num_relacoes = 0;
+    while(comando != 'p'){
+
+        if(comando == 'i'){
+            scanf("%*c%[^,],%i",pessoa.nome,&pessoa.id);
+            pessoas = inserir_pessoa(pessoas,pessoa);
+        }
+        
+        if(comando == 'b'){
+            scanf("%i %i",&irmao.id1,&irmao.id2);
+            irmaos = inserir_irmao(irmao,irmaos);
+        }
+        
+        scanf("%c",&comando);
+    }
+    scanf("%i",&id);
+    imprimir_irmaos(pessoas, irmaos, id);
+    
+    return 0;
+}

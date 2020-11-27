@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct string_t{
+    char val[30];
+} String;
+
+
+void insereStrEm(String *result, String *str1, int pos, String *str2){
+    int tam1 = strlen(str1->val);
+    int tam2 = strlen(str2->val);
+    for(int i = 0, k = 0; i < tam1+tam2; i++, k++){
+        if(i == pos){
+            for(int j = 0; j < tam2; j++){
+                result->val[i] = str2->val[j];
+
+                i++;
+            }
+        }
+        result->val[i] = str1->val[k];
+    }
+}
+
+int main(){
+    String str1;
+    String str2;
+    String result;
+    int pos;
+    
+    fgets(str1.val, 30, stdin);
+    fgets(str2.val, 30, stdin);
+    scanf("%i", &pos);
+    
+    int l1 = strlen(str1.val);
+    int l2 = strlen(str2.val);
+    
+    for(int i=0; i<l1; i++){ //remover o \n no final das strings
+        if(str1.val[i] == '\n') str1.val[i] = '\0';
+        if(str1.val[i] == '\r') str1.val[i] = '\0';
+    }
+    for(int i=0; i<l2; i++){
+        if(str2.val[i] == '\n') str2.val[i] = '\0';
+        if(str2.val[i] == '\r') str2.val[i] = '\0';
+    }
+    
+    insereStrEm(&result, &str1, pos, &str2);
+    for(int i = 0; i < l1+l2-2; i++){
+        printf("%c", result.val[i]);
+    }
+}

@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+int verificarPalindromo(char frase[], int tam){
+    if(tam <= 1){ //se a string tiver 1 ou 0 de tamanho, é palindromo
+        return 1;
+    }
+    if (frase[0] != frase[tam-1]){ //verificar se o primeiro e o ultimo sao diferentes, caso sim, retornar 0
+        return 0;
+    }
+    return verificarPalindromo( frase + 1, tam - 2); //caso nao, eliminar o primeiro e o ultimo caractere para a prox funcao
+}
+
+int checarPalindromo(char frase[]){
+    int i, tam;
+    tam = strlen(frase);
+    return verificarPalindromo(frase, tam);
+}
+
+int main(){
+    char frase[100];
+    int tamanho, posicao, i;
+
+    fgets(frase, 100, stdin);
+    tamanho = strlen(frase);
+    for(int i=0; i<tamanho; i++){
+        if(frase[i] == '\n') frase[i] = '\0';
+        if(frase[i] == '\r') frase[i] = '\0';
+    }
+    printf("O texto %s", frase);
+    for (i = 0, posicao = 0; i < tamanho; i++, posicao++) {
+        if (frase[posicao] == ' ') posicao++, tamanho--;
+        frase[i] = frase[posicao];
+    }
+    if(checarPalindromo(frase) == 1){
+        printf(" é palíndromo");
+    }else printf(" não é palíndromo");
+}
